@@ -1,0 +1,134 @@
+﻿@page
+@model FoodDelivery.Pages.Admin.MenuItems.UpsertModel
+@{ }
+
+
+<form method="post" asp-action="Upsert" enctype="multipart/form-data">
+	<div class="container">
+		<div class="row px-2 mx-2 backgroundWhite border">
+			@* All for Model validation and HTML validation *@
+			<div asp-validation-summary="All" class="text-danger"></div>
+			<div class="col-12 px-3" style="border-bottom:1px solid #325d88">
+				<h2 class="text-primary">@(Model.MenuItemObj.MenuItem.Id != 0 ? "Update" : "Create") Menu Item</h2>
+			</div>
+			<div class="col-8 pt-3">
+				<div class="form-group row">
+					<div class="col-3">
+						<label asp-for="MenuItemObj.MenuItem.Name"></label>
+					</div>
+					<div class="col-9">
+						<input class="form-control" asp-for="MenuItemObj.MenuItem.Name" />
+						<span class="text-danger" asp-validation-for="MenuItemObj.MenuItem.Name"></span>
+					</div>
+					@if (Model.MenuItemObj.MenuItem.Id != 0)
+					{
+		<input type="hidden" asp-for="MenuItemObj.MenuItem.Id" />}
+				</div>
+				<div class="form-group row">
+					<div class="col-3">
+						<label asp-for="MenuItemObj.MenuItem.Price"></label>
+					</div>
+					<div class="col-9">
+						<input class="form-control" asp-for="MenuItemObj.MenuItem.Price" />
+						<span class="text-danger" asp-validation-for="MenuItemObj.MenuItem.Price"></span>
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-3">
+						<label asp-for="MenuItemObj.MenuItem.Description"></label>
+					</div>
+					<div class="col-9">
+						<textarea id="txtDesc" class="form-control" style="height:200px;" asp-for="MenuItemObj.MenuItem.Description"></textarea>
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-3">
+						<label asp-for="MenuItemObj.MenuItem.Image"></label>
+					</div>
+					<div class="col-9">
+
+						<input type="file" id="uploadImgBox" class="form-control" asp-for="MenuItemObj.MenuItem.Image" onchange="ImageSizeCheck()" accept="image/*" />
+						<span class="text-danger" asp-validation-for="MenuItemObj.MenuItem.Image"></span>
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-3">
+						<label asp-for="MenuItemObj.MenuItem.CategoryId"></label>
+					</div>
+					<div class="col-9">
+						@Html.DropDownListFor(m => m.MenuItemObj.MenuItem.CategoryId,
+														Model.MenuItemObj.CategoryList,
+														" - Please select a category - ",
+														new { @class = "form-control", @id="ddlCategory" })
+						<span class="text-danger" asp-validation-for="MenuItemObj.MenuItem.CategoryId"></span>
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-3">
+						<label asp-for="MenuItemObj.MenuItem.FoodTypeId"></label>
+					</div>
+					<div class="col-9">
+						@Html.DropDownListFor(m => m.MenuItemObj.MenuItem.FoodTypeId,
+														Model.MenuItemObj.FoodTypeList,
+														" - Please select a food type - ",
+														new { @class = "form-control", @id="ddlFoodType" })
+						<span class="text-danger" asp-validation-for="MenuItemObj.MenuItem.FoodTypeId"></span>
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-9 offset-3">
+						<div class="row">
+							<div class="col-6">
+								@if (Model.MenuItemObj.MenuItem.Id != 0)
+								{
+					<button type="submit" class="btn btn-primary form-control">Update</button> }
+								else
+								{
+					<button type="submit" class="btn btn-primary form-control" onclick="return ValidateInput()">Create</button>}
+
+							</div>
+							<div class="col-6">
+								<a asp-page="./Index" class="btn btn-success form-control">Back to List</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			@if (Model.MenuItemObj.MenuItem != null)
+			{
+<div class="col-4 p-4">
+	<img id="existingImg" src="@Model.MenuItemObj.MenuItem.Image" style="border-radius:5px; border: 1px solid #bbb9b9; width:100%" />
+</div>}
+		</div>
+
+	</div>
+</form>
+
+@section Scripts{
+	<script>
+		tinymce.init({
+			selector: 'textarea',
+			plugins: "lists",
+			menubar: "file edit format"
+		});
+
+		function ValidateInput() {
+			if (document.getElementById("uploadImgBox").value == "") {
+				swal('Error', 'Please select an image', 'error')
+				return false;
+			}
+
+            if ($('#ddlCategory option:selected').val() == 0) {
+                swal('Error', 'Please select a category', 'error')
+                return false;
+			}
+
+            if ($('#ddlFoodType option:selected').val() == 0) {
+                swal('Error', 'Please select a food type', 'error')
+                return false;
+			}
+
+			return true;
+        }
+	</script>
+}
