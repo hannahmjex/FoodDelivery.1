@@ -8,18 +8,11 @@ using System.Threading.Tasks;
 
 namespace FoodDelivery.Pages
 {
-    public class IndexModel : PageModel
-    {
-        private readonly ILogger<IndexModel> _logger;
-
-        public IndexModel(ILogger<IndexModel> logger)
-        {
-            _logger = logger;
-        }
-
-        public void OnGet()
-        {
-
-        }
-    }
+	public class IndexModel : PageModel
+	{
+		public IActionResult OnGet()
+		{
+			return RedirectToPage("/Customer/Home/Index");
+		}
+	}
 }
