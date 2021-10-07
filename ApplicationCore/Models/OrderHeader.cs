@@ -44,5 +44,7 @@ namespace ApplicationCore.Models
         public string PhoneNumber { get; set; }
 
         public string TransactionId { get; set; }
+
+        public string PaymentStatus { get; set; }
     }
 }
