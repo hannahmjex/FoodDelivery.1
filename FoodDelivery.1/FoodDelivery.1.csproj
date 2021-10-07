@@ -61,15 +61,12 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration" Version="5.0.2" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
     <PackageReference Include="SendGrid" Version="9.24.3" />
+    <PackageReference Include="Stripe.net" Version="39.70.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ApplicationCore\ApplicationCore.csproj" />
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Pages\Customer\Cart\" />
   </ItemGroup>
 
 </Project>
